@@ -5,10 +5,32 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="61dp"
+        android:layout_gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="157dp"
+            android:textColor="#b9b9b9"
+            android:textSize="14sp"
+            android:gravity="right"
+            android:text="CAMMI\nWATCHES YOUR SIGNAL"
+            android:layout_height="wrap_content" />
+
+        <samsung.membership.splash.UnderlineAnim
+            android:layout_width="59dp"
+            android:id="@+id/tab3_underline"
+            android:layout_marginLeft="4dp"
+            android:layout_height="2dp" />
+
+    </LinearLayout>
 
     <GridView
         android:id="@+id/gridView2"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:horizontalSpacing="10dp"

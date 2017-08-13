@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +19,7 @@ import com.squareup.otto.Subscribe;
  * Created by KyuYeol on 2017-07-28.
  */
 
-public class AddActivity2 extends AppCompatActivity {
+public class AirActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -46,12 +45,12 @@ public class AddActivity2 extends AppCompatActivity {
         BusProvider3.getInstance().post(new ActivityResultEvent(requestCode, resultCode, data));
     }
 
-    private boolean[] check = {true,true,true};
+    private boolean[] check = {true,true,true,true};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add2);
+        setContentView(R.layout.activity_air);
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,9 +61,10 @@ public class AddActivity2 extends AppCompatActivity {
         pref = getSharedPreferences("pref", MODE_PRIVATE);
         editor = pref.edit();
 
-        check[0] = pref.getBoolean("Voice", true);
-        check[1] = pref.getBoolean("Gesture", true);
-        check[2] = pref.getBoolean("Face", true);
+        check[0] = pref.getBoolean("Air_Story", true);
+        check[1] = pref.getBoolean("Air_Voice", true);
+        check[2] = pref.getBoolean("Air_Gesture", true);
+        check[3] = pref.getBoolean("Air_Face", true);
 
         relativeLayout = (RelativeLayout)findViewById(R.id.guide_layout);
         add2Layout = (RelativeLayout)findViewById(R.id.add2_layout);
@@ -78,21 +78,28 @@ public class AddActivity2 extends AppCompatActivity {
                         add2Layout.setFocusable(true);
                         relativeLayout.setVisibility(View.INVISIBLE);
                         check[position] = false;
-                        editor.putBoolean("Voice", false);
+                        editor.putBoolean("Air_Story", false);
                         editor.apply();
                         break;
                     case 1:
                         add2Layout.setFocusable(true);
                         relativeLayout.setVisibility(View.INVISIBLE);
                         check[position] = false;
-                        editor.putBoolean("Gesture", false);
+                        editor.putBoolean("Air_Voice", false);
                         editor.apply();
                         break;
                     case 2:
                         add2Layout.setFocusable(true);
                         relativeLayout.setVisibility(View.INVISIBLE);
                         check[position] = false;
-                        editor.putBoolean("Face", false);
+                        editor.putBoolean("Air_Gesture", false);
+                        editor.apply();
+                        break;
+                    case 3:
+                        add2Layout.setFocusable(true);
+                        relativeLayout.setVisibility(View.INVISIBLE);
+                        check[position] = false;
+                        editor.putBoolean("Air_Face", false);
                         editor.apply();
                         break;
                 }
@@ -100,6 +107,7 @@ public class AddActivity2 extends AppCompatActivity {
         });
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Story"));
         tabLayout.addTab(tabLayout.newTab().setText("Voice"));
         tabLayout.addTab(tabLayout.newTab().setText("Gesture"));
         tabLayout.addTab(tabLayout.newTab().setText("Face"));
@@ -112,13 +120,9 @@ public class AddActivity2 extends AppCompatActivity {
         }
 
         viewPager =(ViewPager)findViewById(R.id.pager);
-        final TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        MainTabPagerAdapter pagerAdapter = new MainTabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         //tabLayout.setupWithViewPager(viewPager);
-        final TabFragment1 tabFragment1 = (TabFragment1)pagerAdapter.getItem(0);
-        final TabFragment2 tabFragment2 = (TabFragment2)pagerAdapter.getItem(1);
-        final TabFragment3 tabFragment3 = (TabFragment3)pagerAdapter.getItem(2);
-
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -138,15 +142,6 @@ public class AddActivity2 extends AppCompatActivity {
                 position = tab.getPosition();
                 tabLayout.getTabAt(tab.getPosition()).select();
                 viewPager.setCurrentItem(tab.getPosition());
-                if(tabFragment1 instanceof TabFragment1 && tab.getPosition() == 0) {
-                    ((TabFragment1)tabFragment1).test();
-                }
-                if(tabFragment2 instanceof TabFragment2 && tab.getPosition() == 1) {
-                    ((TabFragment2)tabFragment2).test();
-                }
-                if(tabFragment3 instanceof TabFragment3 && tab.getPosition() == 2) {
-                    ((TabFragment3)tabFragment3).test();
-                }
             }
 
             @Override

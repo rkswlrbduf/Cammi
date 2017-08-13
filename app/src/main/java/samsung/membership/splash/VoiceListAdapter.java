@@ -1,24 +1,13 @@
 package samsung.membership.splash;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,7 +34,10 @@ public class VoiceListAdapter extends BaseAdapter {
         }
 
         TextView voiceResult = (TextView) convertView.findViewById(R.id.voice_result);
+        voiceResult.setBackgroundResource(R.drawable.custom_voice_button);
+        voiceResult.setTextColor(Color.parseColor("#ffffff"));
         Button button = (Button)convertView.findViewById(R.id.voce_delete);
+        button.setTextColor(Color.parseColor("#ffffff"));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

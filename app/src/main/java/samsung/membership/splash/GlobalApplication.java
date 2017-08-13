@@ -3,8 +3,9 @@ package samsung.membership.splash;
 import android.app.Activity;
 import android.app.Application;
 
-import com.kakao.auth.KakaoSDK;
 import com.crashlytics.android.Crashlytics;
+import com.kakao.auth.KakaoSDK;
+
 import io.fabric.sdk.android.Fabric;
 
 /**

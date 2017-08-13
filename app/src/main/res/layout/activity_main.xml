@@ -13,36 +13,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                app:layout_scrollFlags="scroll|enterAlways"
-                android:background="#897F86"
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapseToolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentInsetStart="0dp"
-                android:minHeight="?attr/actionBarSize">
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="640dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:title="Custom Layout">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <include layout="@layout/opened_channel"></include>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="New Channel"
-                    android:textColor="#FFFFFF"
-                    android:textSize="25dp" />
-            </android.support.v7.widget.Toolbar>
+                    android:minHeight="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/icon_cammi_bi_top_black"
+                        android:layout_height="16dp" />
+
+                </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+
         </android.support.design.widget.AppBarLayout>
+
 
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -51,9 +69,8 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="?attr/actionBarSize"
         android:background="#C0C0C0"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp" />
+        android:divider="#ffffff"
+        android:dividerHeight="1dp" />
 </android.support.v4.widget.DrawerLayout>

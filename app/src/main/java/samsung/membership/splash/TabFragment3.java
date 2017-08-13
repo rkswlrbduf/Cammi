@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -43,13 +42,14 @@ public class TabFragment3 extends Fragment {
     final List<Bitmap> imageLists = new ArrayList<Bitmap>();
 
     int img[] = {};
+    UnderlineAnim underlineAnim;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Log.d("TAG","RECALL");
 
-        View view = inflater.inflate(R.layout.tab_fragment_2, container, false);
+        View view = inflater.inflate(R.layout.tab_fragment_3, container, false);
 
         gridView = (GridView) view.findViewById(R.id.gridView2);
 
@@ -59,7 +59,13 @@ public class TabFragment3 extends Fragment {
 
         gridView.setAdapter(adapter3);
 
+        underlineAnim = (UnderlineAnim)view.findViewById(R.id.tab3_underline);
+
         return view;
+    }
+
+    public void test() {
+        underlineAnim.AnimStart();
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -160,7 +166,7 @@ class GestureAdapter3 extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
                     ((AddActivity2) activityContext).startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_CODE);
                 }
@@ -174,6 +180,7 @@ class GestureAdapter3 extends BaseAdapter {
         return convertView;
     }
 }
+
 final class BusProvider3 {
     private static final Bus BUS = new Bus();
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  * Created by yumin on 2017-07-29.
  */
 
-public class TabFragment1 extends Fragment {
+public class MainTabFragment4 extends Fragment {
 
     private Button voiceRec;
     private SpeechRecognizer speechRecognizer;
@@ -27,7 +28,6 @@ public class TabFragment1 extends Fragment {
     private View v;
     private ListView listView;
     private VoiceListAdapter voiceListAdapter;
-    UnderlineAnim underlineAnim;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -52,13 +52,7 @@ public class TabFragment1 extends Fragment {
         listView = (ListView) v.findViewById(R.id.listview);
         listView.setAdapter(voiceListAdapter);
 
-        underlineAnim = (UnderlineAnim)v.findViewById(R.id.tab1_underline);
-
         return v;
-    }
-
-    public void test() {
-        underlineAnim.AnimStart();
     }
 
     private RecognitionListener listener = new RecognitionListener() {
@@ -77,6 +71,7 @@ public class TabFragment1 extends Fragment {
             ArrayList<String> mResult = results.getStringArrayList(key);
             String[] rs = new String[mResult.size()];
             mResult.toArray(rs);
+            Toast.makeText(getActivity().getApplicationContext(), rs[0], Toast.LENGTH_SHORT).show();
             voiceListAdapter.addItem(rs[0]);
             voiceListAdapter.notifyDataSetChanged();
         }
@@ -84,7 +79,7 @@ public class TabFragment1 extends Fragment {
         @Override
         public void onReadyForSpeech(Bundle params) {
             // TODO Auto-generated method stub
-            voiceRec.setBackgroundResource(R.drawable.btn_record_on);
+
         }
 
         @Override
@@ -108,7 +103,7 @@ public class TabFragment1 extends Fragment {
         @Override
         public void onEndOfSpeech() {
             // TODO Auto-generated method stub
-            voiceRec.setBackgroundResource(R.drawable.btn_record_off);
+
         }
 
         @Override

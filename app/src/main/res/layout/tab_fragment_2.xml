@@ -2,15 +2,39 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="203dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="82dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="203dp"
+            android:layout_height="17dp"
+            android:textColor="#b9b9b9"
+            android:textSize="14sp"
+            android:text="CAMMI CATCHES YOUR SIGNAL"
+            android:layout_gravity="center_horizontal" />
+
+        <samsung.membership.splash.UnderlineAnim
+            android:layout_width="59dp"
+            android:layout_marginLeft="50dp"
+            android:id="@+id/tab2_underline"
+            android:layout_height="2dp" />
+
+    </LinearLayout>
 
 
     <GridView
         android:id="@+id/gridView2"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:horizontalSpacing="10dp"
         android:numColumns="2"
         android:verticalSpacing="10dp" />

@@ -36,6 +36,7 @@
             android:theme="@style/NoAction" />
         <activity android:name=".KakaoSignupActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".VideoPlayerActivity"/>
         <activity
             android:name=".AddActivity"
             android:theme="@style/NoAction">
@@ -70,5 +71,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        <activity android:name=".AirActivity"
+            android:theme="@style/NoAction"/>
     </application>
 </manifest>

@@ -1,21 +1,15 @@
 package samsung.membership.splash;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,12 +19,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.facebook.appevents.internal.Constants;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +44,7 @@ public class TabFragment2 extends Fragment {
     final List<Bitmap> imageLists = new ArrayList<Bitmap>();
 
     int img[] = {};
+    UnderlineAnim underlineAnim;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +64,13 @@ public class TabFragment2 extends Fragment {
 
         gridView.setAdapter(adapter2);
 
+        underlineAnim = (UnderlineAnim)view.findViewById(R.id.tab2_underline);
+
         return view;
+    }
+
+    public void test() {
+        underlineAnim.AnimStart();
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -198,7 +197,7 @@ class GestureAdapter2 extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
                     ((AddActivity2) activityContext).startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_CODE);
                 }
@@ -212,6 +211,7 @@ class GestureAdapter2 extends BaseAdapter {
         return convertView;
     }
 }
+
 final class BusProvider2 {
     private static final Bus BUS = new Bus();
 

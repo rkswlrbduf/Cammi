@@ -1,10 +1,8 @@
 package samsung.membership.splash;
 
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import org.apache.commons.net.ftp.FTPClient;
 
 import java.util.ArrayList;
 
@@ -53,7 +48,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Channel");
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close) {
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -86,12 +81,6 @@ public class RecyclerViewActivity extends AppCompatActivity {
         });
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
-
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.back);
-
-        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(drawable);
-
-        recyclerView.addItemDecoration(dividerItemDecoration);
 
         recyclerView.setHasFixedSize(true);
 

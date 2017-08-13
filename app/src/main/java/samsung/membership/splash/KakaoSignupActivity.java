@@ -64,7 +64,7 @@ public class KakaoSignupActivity extends Activity {
     }
 
     private void redirectMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, WifiCheckActivity.class));
         finish();
     }
     protected void redirectLoginActivity() {

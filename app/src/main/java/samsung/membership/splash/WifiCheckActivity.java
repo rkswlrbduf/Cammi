@@ -1,16 +1,13 @@
 package samsung.membership.splash;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -21,6 +18,8 @@ public class WifiCheckActivity extends AppCompatActivity implements ShowWifiMoni
 
     private TextView wifiConnected;
     private ShowWifiMonitor showWifiMonitor;
+
+    private boolean startCheck = false;
 
     @Override
     protected void onDestroy() {
@@ -46,8 +45,12 @@ public class WifiCheckActivity extends AppCompatActivity implements ShowWifiMoni
     @Override
     public void OnChanged(int status) {
         if(status == ShowWifiMonitor.WIFI_ENABLED) {
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            WifiCheckActivity.this.finish();
+            if(!startCheck) {
+                Log.d("CHECKCHECK", "CHECK");
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                WifiCheckActivity.this.finish();
+                startCheck = !startCheck;
+            }
         } else {
             wifiConnected.setText("SETTING PLZ");
         }

@@ -10,7 +10,7 @@ import com.squareup.picasso.Transformation;
 
 public class  PicassoTransformations {
 
-    public static int targetWidth = 1000;
+    public static int targetWidth = 1500;
 
     public static Transformation resizeTransformation = new Transformation() {
         @Override

@@ -2,9 +2,10 @@
 <resources>
 
     <string-array name="titles">
-        <item>Logout</item>
-        <item>TEST2</item>
-        <item>TEST3</item>
+        <item>마이페이지</item>
+        <item>저장공간관리</item>
+        <item>문의하기</item>
+        <item>버전정보</item>
     </string-array>
 
 </resources>

@@ -1,31 +1,27 @@
 package samsung.membership.splash;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +35,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
-import com.squareup.picasso.Picasso;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -58,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
     private LinearLayout storyLinearLayout;
-
+    private CardView cardView;
 
     public static RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -99,8 +94,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Channel");
 
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close) {
+        Log.d("Size => " , "height : "+dpHeight+", width : " + dpWidth);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -124,6 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawerList = (ListView) findViewById(R.id.drawer_setting);
+        View padding =  new View(this);
+        padding.setMinimumHeight(1000);
+        drawerList.addHeaderView(padding);
         drawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,drawerTitles));
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -132,21 +135,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
 
+        cardView = (CardView)findViewById(R.id.cardview);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, VideoPlayerActivity.class));
+            }
+        });
+
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
-
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.back);
-
-        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(drawable);
-
-        recyclerView.addItemDecoration(dividerItemDecoration);
 
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-
-
 
         OpenedChannelCounter = true;
 
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void selectItem(int position) {
-        if(position == 0) {
+        if(position == 1) {
             LoginManager.getInstance().logOut();
             onClickLogout();
             Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
@@ -242,6 +244,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if(id == R.id.action_add && OpenedChannelCounter == false) {
             this.startActivity(new Intent(MainActivity.this, AddActivity.class));
             return true;
+        } else {
+            startActivity(new Intent(MainActivity.this, AddActivity2.class));
         }
 
         if(actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -303,7 +307,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private class DownloadFilesTask extends AsyncTask<Void, String, Void> {
 
-        private ProgressDialog progressDialog;
         private Context context;
 
         protected DownloadFilesTask(Context context) {
@@ -312,10 +315,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(context);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setMessage("Start");
-            progressDialog.show();
             super.onPreExecute();
         }
 
@@ -367,13 +366,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         @Override
         protected void onProgressUpdate(String... values) {
-            if(values[0].equals("progress")) {
-                progressDialog.setProgress(Integer.parseInt(values[1]));
-                progressDialog.setMessage(values[2]);
-            } else if(values[0].equals("max")) {
-                progressDialog.setMax(Integer.parseInt(values[1]));
-            }
-
             super.onProgressUpdate(values);
         }
 
@@ -382,7 +374,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             //image.setImageURI(Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/2017-07-30 22: 38: 45.jpg"));
             //gv.setAdapter(adapter);
             recyclerView.setAdapter(adapter);
-            progressDialog.dismiss();
             super.onPostExecute(aVoid);
         }
     }
