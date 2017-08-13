@@ -139,13 +139,13 @@ public class AddActivity2 extends AppCompatActivity {
                 tabLayout.getTabAt(tab.getPosition()).select();
                 viewPager.setCurrentItem(tab.getPosition());
                 if(tabFragment1 instanceof TabFragment1 && tab.getPosition() == 0) {
-                    ((TabFragment1)tabFragment1).test();
+                    ((TabFragment1)tabFragment1).StartAnim();
                 }
                 if(tabFragment2 instanceof TabFragment2 && tab.getPosition() == 1) {
-                    ((TabFragment2)tabFragment2).test();
+                    ((TabFragment2)tabFragment2).StartAnim();
                 }
                 if(tabFragment3 instanceof TabFragment3 && tab.getPosition() == 2) {
-                    ((TabFragment3)tabFragment3).test();
+                    ((TabFragment3)tabFragment3).StartAnim();
                 }
             }
 

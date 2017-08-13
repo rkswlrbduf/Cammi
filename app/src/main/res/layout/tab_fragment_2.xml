@@ -9,34 +9,68 @@
     <LinearLayout
         android:layout_width="203dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="82dp"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="203dp"
             android:layout_height="17dp"
-            android:textColor="#b9b9b9"
-            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
             android:text="CAMMI CATCHES YOUR SIGNAL"
-            android:layout_gravity="center_horizontal" />
+            android:textColor="#b9b9b9"
+            android:textSize="14sp" />
 
         <samsung.membership.splash.UnderlineAnim
-            android:layout_width="59dp"
-            android:layout_marginLeft="50dp"
             android:id="@+id/tab2_underline"
-            android:layout_height="2dp" />
+            android:layout_width="59dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft="50dp" />
 
     </LinearLayout>
 
-
-    <GridView
-        android:id="@+id/gridView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="32dp"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:verticalSpacing="10dp" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/circle_button" />
+
+        <Button
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/circle_button" />
+
+        <Button
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/circle_button" />
+
+        <RelativeLayout
+            android:layout_width="86dp"
+            android:layout_height="86dp">
+
+            <Button
+                android:id="@+id/add_button"
+                android:layout_width="86dp"
+                android:layout_height="86dp"
+                android:background="@drawable/plus_circle_button" />
+            <ImageView
+
+                android:layout_width="26dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_gesture_add"
+                android:layout_height="26dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

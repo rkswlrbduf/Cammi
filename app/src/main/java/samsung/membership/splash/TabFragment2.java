@@ -2,6 +2,8 @@ package samsung.membership.splash;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -16,8 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -46,6 +52,8 @@ public class TabFragment2 extends Fragment {
     int img[] = {};
     UnderlineAnim underlineAnim;
 
+    private final int GALLERY_CODE = 2000;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,21 +63,115 @@ public class TabFragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.tab_fragment_2, container, false);
-
-        gridView = (GridView) view.findViewById(R.id.gridView2);
-
         imageLists.add(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.addbutton));
-
         adapter2 = new GestureAdapter2(getApplicationContext(), R.layout.gesture_item, imageLists, getActivity());
-
-        gridView.setAdapter(adapter2);
-
         underlineAnim = (UnderlineAnim)view.findViewById(R.id.tab2_underline);
-
+        Button addButton = (Button)view.findViewById(R.id.add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastSnackBar(v);
+            }
+        });
         return view;
     }
 
-    public void test() {
+    public boolean getInstagramPackage() {
+        boolean isExist = false;
+
+        PackageManager pkgMgr = getActivity().getPackageManager();
+        List<ResolveInfo> mApps;
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        mApps = pkgMgr.queryIntentActivities(mainIntent, 0);
+
+        try {
+            for (int i = 0; i < mApps.size(); i++) {
+                if(mApps.get(i).activityInfo.packageName.startsWith("com.instagram.android")){
+                    isExist = true;
+                    break;
+                }
+            }
+        }
+        catch (Exception e) {
+            isExist = false;
+        }
+        return isExist;
+    }
+
+    public boolean getFacebookPackage() {
+        boolean isExist = false;
+
+        PackageManager pkgMgr = getActivity().getPackageManager();
+        List<ResolveInfo> mApps;
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        mApps = pkgMgr.queryIntentActivities(mainIntent, 0);
+
+        try {
+            for (int i = 0; i < mApps.size(); i++) {
+                if(mApps.get(i).activityInfo.packageName.startsWith("com.facebook.katana")){
+                    isExist = true;
+                    break;
+                }
+            }
+        }
+        catch (Exception e) {
+            isExist = false;
+        }
+        return isExist;
+    }
+
+
+    private void ToastSnackBar(View view) {
+        Snackbar snackbar = Snackbar.make(view,"TEST", Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
+        TextView textView = (TextView) layout.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setVisibility(View.INVISIBLE);
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View snackView = inflater.inflate(R.layout.snack_bar, null);
+        snackView.findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                getActivity().startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_CODE);
+            }
+        });
+        snackView.findViewById(R.id.instagram).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getInstagramPackage()) {
+                    Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else {
+                    String url = "market://details?id=" + "com.instagram.android";
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(i);
+                }
+            }
+        });
+        snackView.findViewById(R.id.facebook).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getFacebookPackage()) {
+                    Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.facebook.katana");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else {
+                    String url = "market://details?id=" + "com.facebook.katana";
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(i);
+                }
+            }
+        });
+        layout.addView(snackView, 0);
+        snackbar.show();
+    }
+
+    public void StartAnim() {
         underlineAnim.AnimStart();
     }
 

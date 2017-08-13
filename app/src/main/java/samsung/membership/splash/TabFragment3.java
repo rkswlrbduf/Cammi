@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -16,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -34,6 +37,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class TabFragment3 extends Fragment {
 
+    private final int GALLERY_CODE = 3000;
+
     private GridView gridView;
     private int count = 0;
     private int[] image = new int[]{};
@@ -45,26 +50,42 @@ public class TabFragment3 extends Fragment {
     UnderlineAnim underlineAnim;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        Log.d("TAG","RECALL");
-
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_fragment_3, container, false);
-
-        gridView = (GridView) view.findViewById(R.id.gridView2);
-
         imageLists.add(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.addbutton));
-
         adapter3 = new GestureAdapter3(getApplicationContext(), R.layout.gesture_item, imageLists, getActivity());
-
-        gridView.setAdapter(adapter3);
-
         underlineAnim = (UnderlineAnim)view.findViewById(R.id.tab3_underline);
-
+        Button addButton = (Button)view.findViewById(R.id.add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastSnackBar(v);
+            }
+        });
         return view;
     }
 
-    public void test() {
+    private void ToastSnackBar(View view) {
+        Snackbar snackbar = Snackbar.make(view,"TEST", Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
+        TextView textView = (TextView) layout.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setVisibility(View.INVISIBLE);
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View snackView = inflater.inflate(R.layout.snack_bar, null);
+        snackView.findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                getActivity().startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_CODE);
+            }
+        });
+        layout.addView(snackView, 0);
+        snackbar.show();
+    }
+
+    public void StartAnim() {
         underlineAnim.AnimStart();
     }
 
