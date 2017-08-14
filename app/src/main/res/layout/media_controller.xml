@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/play_stop"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:src="@drawable/icon_skip"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/seekBar"/>
+
+    <samsung.membership.splash.VerticalSeekbar
+        android:id="@+id/seekBar"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentBottom="true"
+        style="@style/VerticalSeekBarStyle"
+        android:layout_width="4dp"
+        android:layout_height="638dp"
+        android:layout_gravity="right"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:thumb="@null" />
+
+</RelativeLayout>
